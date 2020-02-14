@@ -1,5 +1,15 @@
 @import '_variables';
+@import '_auth';
+
+* {
+    box-sizing: border-box;
+}
+
 
 body {
     background-color: #FFF;
+}
+
+.onliance-logomark {
+    width: 5rem;
 }

@@ -1,0 +1,87 @@
+.full-height {
+    height: 100vh;
+}
+
+.col-full {
+    height: inherit;
+}
+
+.col-left, .col-right {
+    transition: all 1s ease-in-out;
+}
+
+h1, h2 {
+    transition: all 1s ease-in-out;
+}
+
+h1 {
+    font-weight: bolder;
+    font-size: 37pt;
+    margin-bottom: .5rem;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.padding-small {
+    padding: .5rem 0;
+}
+
+.padding-top {
+    padding-top: 1.5rem;
+}
+
+.el-button {
+    margin: .5rem !important;
+}
+
+.left-container {
+    background-color: #e7e7e7;
+    background-image: url('../img/brown_1.png');
+    background-position: center;
+    background-size: cover;
+    height: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    h1 {
+        margin-top: .5rem;
+    }
+}
+
+.right-container {
+    
+    height: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1 {
+        margin-bottom: 1rem;
+    }
+}
+
+.link-block {
+    font-size: 13px;
+    display: block; 
+}
+
+.button-block {
+    display: block !important;
+    margin: .5rem auto !important;
+}
+
+
+.link {
+    padding: .5rem 0;
+}
+
+@media screen and (max-width:500px) {
+    .col-left {
+        width: 0% !important;
+    }
+    .col-right {
+        width: 100% !important;
+    }
+}
