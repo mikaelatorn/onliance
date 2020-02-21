@@ -7,13 +7,23 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'login',
     component: Home
   },
   {
     path: '/register',
-    name: 'Signup',
+    name: 'signup',
     component: () => import(/* webpackChunkName: "about" */ '../views/Signup.vue')
+  },
+  {
+    path: '/request-reset-password',
+    name: 'request-reset',
+    component: () => import(/* webpackChunkName: "about" */ '../views/RequestResetPassword.vue')
+  },
+  {
+    path: '/reset-password',
+    name: 'reset-password',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ResetPassword.vue')
   },
   {
     path: '/about',

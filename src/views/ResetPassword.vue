@@ -18,14 +18,11 @@
       <el-col :span="12" class="col-full col-right">
           <div class="right-container">
             <el-col class="form" :span="8">
-              <h1>Login</h1>
-              <small>Don't have an account?
-                <router-link class="link" :to="{ name: 'signup' }" >Signup here</router-link>
-              </small>
-              <el-input class="padding-small" placeholder="Email" v-model="form.email" minw></el-input>
-              <el-input class="padding-small" placeholder="Password" type="password" v-model="form.password"></el-input>
-              <router-link class="link link-block" :to="{ name: 'request-reset' }" >Forgot your password?</router-link>
-              <el-button class="padding-small button-block" type="primary" round>Login</el-button>
+              <h1>Set new password</h1>
+              <small>After you've entered your new password you will be redirected to the login page and asked to sign in with your new password</small>
+              <el-input class="padding-small" placeholder="New Password" type="password" v-model="form.password"></el-input>
+              <el-input class="padding-small" placeholder="Repeat new password" type="password" v-model="form.passwordRepeat"></el-input>
+              <el-button class="padding-small button-block" type="primary" round>Confirm</el-button>
             </el-col>
           </div>
       </el-col>
@@ -39,8 +36,8 @@ export default {
   data () {
     return {
       form: {
-        email: '',
-        password: ''
+        password: '',
+        passwordRepeat: ''
       }
     }
   }

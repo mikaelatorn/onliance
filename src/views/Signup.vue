@@ -25,7 +25,7 @@
               <el-input class="padding-small" placeholder="Repeat password" type="password" v-model="form.passwordRepeat"></el-input>
               <el-input class="padding-small" placeholder="Company name" v-model="form.companyName"></el-input>
               <small>Already have an account?
-                  <router-link class="link" :to="{ name: 'Home' }" >Login here</router-link>
+                  <router-link class="link" :to="{ name: 'login' }" >Login here</router-link>
               </small>
               <el-button class="padding-small button-block" type="primary" round>Signup</el-button>
             </el-col>
