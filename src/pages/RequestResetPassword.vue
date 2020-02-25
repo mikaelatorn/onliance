@@ -18,29 +18,26 @@
       <el-col :span="12" class="col-full col-right">
           <div class="right-container">
             <el-col class="form" :span="8">
-              <h1>Login</h1>
-              <small>Don't have an account?
-                <router-link class="link" :to="{ name: 'signup' }" >Signup here</router-link>
+              <h1>Reset password</h1>
+              <small>Enter the email address you used when you joined and we’ll send you instructions to reset your password</small>
+              <el-input class="padding-small" placeholder="Email" v-model="form.email"></el-input>
+              <small>Want to try again? Go back to
+                  <router-link class="link" :to="{ name: 'login' }" >Login here</router-link>
               </small>
-              <el-input class="padding-small" placeholder="Email" v-model="form.email" minw></el-input>
-              <el-input class="padding-small" placeholder="Password" type="password" v-model="form.password"></el-input>
-              <router-link class="link link-block" :to="{ name: 'request-reset' }" >Forgot your password?</router-link>
-              <el-button class="padding-small button-block" type="primary" round>Login</el-button>
+              <el-button class="padding-small button-block" type="primary" round>Reset</el-button>
             </el-col>
           </div>
       </el-col>
     </el-row>
   </div>
 </template>
-
 <script>
 export default {
   name: 'Home',
   data () {
     return {
       form: {
-        email: '',
-        password: ''
+        email: ''
       }
     }
   }
