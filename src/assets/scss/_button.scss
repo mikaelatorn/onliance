@@ -1,0 +1,17 @@
+.el-button {
+  transition: all .3s ease-in-out; 
+}
+
+.el-button--primary {
+  background-color: $o-green;
+  border-color: $o-green;
+  &:hover, &:focus, &:active {
+    background-color: darken($o-green, 7%);
+    border-color: darken($o-green, 7%);
+  }
+  
+}
+
+.button-auth {
+  width: 100%;
+}

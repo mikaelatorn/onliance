@@ -1,0 +1,91 @@
+<template>
+  <div class="home">
+    <el-alert v-if="errorMsg"
+      :title="errorMsg"
+      type="error"
+      @close="removeErrorMsg"
+      show-icon>
+    </el-alert>
+    <el-row class="full-height">
+      <el-col :span="12" class="col-full col-left">
+          <LeftPanel />
+      </el-col>
+      <el-col :span="12" class="col-full col-right">
+          <div class="right-container">
+            <el-col class="form" :span="8">
+              <h1>Login</h1>
+              <small style="margin-bottom: 1rem">Don't have an account?
+                <router-link class="link" :to="{ name: 'signup' }" >Signup here</router-link>
+              </small>
+              <el-form @submit.prevent :rules="rules" ref="form" :model="form">
+                <el-form-item prop="email">
+                  <el-input class="padding-small" placeholder="Email" v-model="form.email"></el-input>
+                </el-form-item>
+                <el-form-item prop="password" class="last-form-item">
+                  <el-input class="padding-small" placeholder="Password" type="password" v-model="form.password"></el-input>
+                </el-form-item>
+                <div style="clear: both"></div>
+                <el-button class="button-block button-auth" style="margin-top: 1rem" type="primary" default @click="login('form')">Login</el-button>
+                <router-link class="link link-block" style="margin-top: 1rem" :to="{ name: 'request-reset' }" >Forgot your password?</router-link>
+              </el-form>
+            </el-col>
+          </div>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import LeftPanel from '@/components/LeftPanelNotLoggedIn'
+const fb = require('@/firebaseConfig.js')
+export default {
+  name: 'Home',
+  components: {
+    LeftPanel
+  },
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
+      },
+      errorMsg: '',
+      rules: {
+        email: [
+          { required: true, message: 'Email required', trigger: 'blur' },
+          { type: 'email', message: 'Please input a valid email address', trigger: ['blur', 'change'] }
+        ],
+        password: [
+          { required: true, message: 'Password required', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    login (form) {
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          const loading = this.$loading({
+            lock: true,
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+          fb.auth.signInWithEmailAndPassword(this.form.email, this.form.password).then(user => {
+            this.$store.commit('setCurrentUser', user.user)
+            this.$store.dispatch('fetchUserProfile')
+            this.$router.push({ name: 'dashboard' })
+            loading.close()
+          }).catch(err => {
+            console.log(err)
+            loading.close()
+            this.errorMsg = err.message
+          })
+        }
+      })
+    },
+    removeErrorMsg () {
+      this.errorMsg = ''
+    }
+  }
+}
+</script>

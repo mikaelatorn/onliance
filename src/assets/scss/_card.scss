@@ -1,0 +1,91 @@
+.el-card {
+    border-radius: 0;
+    border: 1px solid #E5E5E5;
+    h1,
+    h2,
+    h3 {
+        color: $o-green;
+    }
+}
+
+.shop-name {
+    color: $o-green;
+    margin: 0;
+    font-size: 2em;
+}
+
+.shop-slogan {
+    margin: 0;
+}
+
+.title-row h3 {
+    margin-bottom: .3rem;
+}
+
+.media-card {
+    position: relative;
+    text-align: center;
+    min-height: 8rem;
+    .el-card__body {
+        height: 8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.card-overlay {
+    position: absolute;
+    width: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    .media-icon {
+        color: $o-green;
+        font-size: 100pt;
+        opacity: .2;
+    }
+    #first-media-icon {
+        position: absolute;
+        left: -1.5rem;
+        top: -2rem;
+    }
+    #second-media-icon {
+        position: absolute;
+        right: -1.5rem;
+        top: 1.8rem;
+    }
+}
+
+.profile-container {
+    .img-container {
+        background-color: #E5E5E5;
+        border-radius: 50%;
+        height: 3.7rem;
+        width: 3.7rem;
+        margin-right: .5rem;
+    }
+}
+
+.edit-profile-icon {
+    color: $o-green;
+    font-size: 20pt;
+    margin-left: .5rem
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0 .3rem;
+    h3 {
+        margin: 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .location-card {
+        margin-top: 1rem;
+    }
+}

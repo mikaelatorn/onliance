@@ -20,10 +20,15 @@
           <i class="el-icon-setting"></i>
           <span slot="title">Settings</span>
       </el-menu-item>
+      <el-menu-item @click="logout">
+        <i class="el-icon-d-arrow-right"></i>
+        <span slot="title">Logout</span>
+    </el-menu-item>
     </el-menu>
   </el-drawer>
 </template>
 <script>
+const fb = require('../firebaseConfig.js')
 export default {
   data () {
     return {
@@ -34,6 +39,16 @@ export default {
     this.$root.$on('updateDrawer', () => {
       this.drawer = !this.drawer
     })
+  },
+  methods: {
+    logout () {
+      fb.auth.signOut().then(() => {
+        this.$store.dispatch('clearData')
+        this.$router.push({ name: 'login' })
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   }
 }
 </script>

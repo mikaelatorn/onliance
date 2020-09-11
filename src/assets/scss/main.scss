@@ -1,13 +1,32 @@
 @import '_variables';
 @import '_auth';
-
+@import '_button';
+@import '_form';
+@import '_nav';
+@import '_dialog';
+@import '_card';
 * {
     box-sizing: border-box;
 }
 
-
 body {
-    background-color: #FFF;
+    background-color: $white;
+}
+
+.wrapper-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+}
+
+.left-align-container {
+    text-align: left;
+}
+
+.right-container {
+    h1 {
+        font-size: 30pt;
+    }
 }
 
 .onliance-logomark {
@@ -17,6 +36,8 @@ body {
 #app-inner {
     height: 100vh;
     display: flex;
+    color: #4A4A4A;
+    background-color: #F5F6FA;
     .el-row {
         width: 100%;
     }
@@ -33,7 +54,8 @@ body {
 }
 
 .title {
-    border-bottom: 1px solid #e7e7e7;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid $border-grey;
     display: flex;
     align-items: center;
     padding: .5rem;
@@ -72,33 +94,46 @@ body {
 //animations
 .slide-fade-enter-active {
     transition: all 0.5s ease;
-  }
-  
-  .slide-fade-leave-active {
+}
+
+.slide-fade-leave-active {
     transition: all 0.5s ease;
-  }
-  
-  .slide-fade-enter {
+}
+
+.slide-fade-enter {
     transform: translateX(-100%);
-  }
-  
-  .slide-fade-leave-to {
+}
+
+.slide-fade-leave-to {
     transform: translateX(0%);
-  }
-  
-  .fade-enter-active {
+}
+
+.fade-enter-active {
     transition: all 0.5s ease-in-out;
-  }
-  
-  .fade-leave-active {
+}
+
+.fade-leave-active {
     transition: all 0.5s ease-in-out;
-  }
-  
-  .fade-enter,
-  .fade-leave-active {
+}
+
+.fade-enter,
+.fade-leave-active {
     opacity: 0;
-  }
-  
-  .fade-leave-to {
+}
+
+.fade-leave-to {
     opacity: 0;
-  }
+}
+
+.el-alert {
+    position: absolute !important;
+    z-index: 99;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}

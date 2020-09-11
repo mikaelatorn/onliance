@@ -25,7 +25,15 @@ h2 {
 }
 
 .padding-small {
-    padding: .5rem 0;
+    padding: .5rem 0 0;
+}
+
+.el-form-item {
+    margin-bottom: 12px !important;
+}
+
+.small-auth {
+    margin-top: 1.2rem;
 }
 
 .padding-top {
@@ -37,7 +45,7 @@ h2 {
 }
 
 .left-container {
-    background-color: #e7e7e7;
+    background-color: $border-grey;
     background-image: url('../img/brown_1.png');
     background-position: center;
     background-size: cover;
