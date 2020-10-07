@@ -2,7 +2,7 @@
   <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse" :router="true">
    <div>
     <img
-      src="../assets/img/1.svg"
+      src="../assets/img/logo-02.svg"
       class="onliance-logomark-nav"
       type="image/svg+xml"
       alt="Onliance Logomark"
@@ -24,13 +24,28 @@
         <i class="el-icon-setting"></i>
         <span slot="title">Settings</span>
     </el-menu-item>
+    <el-menu-item @click="logout">
+        <i class="el-icon-d-arrow-right"></i>
+        <span slot="title">Logout</span>
+    </el-menu-item>
   </el-menu>
 </template>
 <script>
+const fb = require('../firebaseConfig.js')
 export default {
   data () {
     return {
       isCollapse: true
+    }
+  },
+  methods: {
+    logout () {
+      fb.auth.signOut().then(() => {
+        this.$store.dispatch('clearData')
+        this.$router.push({ name: 'login' })
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
