@@ -83,7 +83,7 @@ const routes = [{
       import(/* webpackChunkName: "profile" */ '../pages/Profile.vue')
     // meta: { requiresAuth: true
   }, {
-    path: 'public-profile',
+    path: 'public-profile/:id',
     name: 'public-profile',
     component: () =>
       import(/* webpackChunkName: "profile" */ '../pages/PublicProfile.vue')

@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     changeDrawer () {
-      this.$root.$emit('updateDrawer')
+      this.$root.$emit('update-drawer')
     }
   }
 }

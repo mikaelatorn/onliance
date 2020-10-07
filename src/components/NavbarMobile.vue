@@ -28,7 +28,6 @@
   </el-drawer>
 </template>
 <script>
-const fb = require('../firebaseConfig.js')
 export default {
   data () {
     return {
@@ -36,13 +35,13 @@ export default {
     }
   },
   mounted () {
-    this.$root.$on('updateDrawer', () => {
+    this.$root.$on('update-drawer', () => {
       this.drawer = !this.drawer
     })
   },
   methods: {
     logout () {
-      fb.auth.signOut().then(() => {
+      this.$fb.auth.signOut().then(() => {
         this.$store.dispatch('clearData')
         this.$router.push({ name: 'login' })
       }).catch(err => {

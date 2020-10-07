@@ -66,13 +66,21 @@
         height: 3.7rem;
         width: 3.7rem;
         margin-right: .5rem;
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+    }
+    .profile-img {
+        width: 100%;
+        height: auto;
     }
 }
 
 .edit-profile-icon {
     color: $o-green;
     font-size: 20pt;
-    margin-left: .5rem
+    margin-left: .5rem;
+    cursor: pointer;
 }
 
 .flex-container {
@@ -82,6 +90,30 @@
     h3 {
         margin: 0;
     }
+}
+
+// image upload 
+.el-upload--picture-card,
+.el-upload-list--picture-card .el-upload-list__item-actions,
+.el-upload-list--picture-card .el-upload-list__item {
+    border-radius: 50%;
+}
+
+.el-upload-list__item {
+    transition: all .3s ease-in-out;
+}
+
+.is-disabled + .el-upload--picture-card {
+    display: none;
+}
+
+.el-upload-list--picture-card .el-upload-list__item {
+    display: flex;
+    align-items: center;
+}
+
+.el-upload-list--picture-card .el-upload-list__item-thumbnail {
+    height: auto;
 }
 
 @media only screen and (max-width: 767px) {

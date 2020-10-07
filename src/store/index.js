@@ -27,6 +27,20 @@ export const store = new Vuex.Store({
     clearData ({ commit }) {
       commit('setCurrentUser', null)
       commit('setUserProfile', {})
+    },
+    updateProfile ({ commit, state, dispatch }, form) {
+      console.log(form)
+      fb.usersCollection.doc(state.currentUser.uid).update({
+        profile: {
+          avatar: form.image,
+          slogan: form.slogan,
+          description: form.description
+        }
+      }).then(res => {
+        dispatch('fetchUserProfile')
+      }).catch(err => {
+        console.log(err)
+      })
     }
   },
   mutations: {
@@ -34,6 +48,7 @@ export const store = new Vuex.Store({
       state.currentUser = val
     },
     setUserProfile (state, val) {
+      console.log(val)
       state.userProfile = val
     }
   },

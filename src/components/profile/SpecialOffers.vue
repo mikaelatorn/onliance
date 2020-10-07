@@ -9,7 +9,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="10">
-      <el-col v-if="!media || media.length === 0" :span="24">
+      <el-col v-if="!offers || offers.length === 0" :span="24">
         <el-card class="media-card" shadow="never">
           <h3 v-if="showEdit">+ Add Special Offers</h3>
           <h3 v-else>No special offers</h3>

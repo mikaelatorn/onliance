@@ -1,12 +1,12 @@
 <template>
   <el-row class="left-align-container">
     <TopBar name="Profile" />
-    <el-row class="wrapper-container">
-      <ProfileDescription />
-      <Media />
-      <Products />
-      <SpecialOffers />
-    </el-row>
+    <div class="wrapper-container">
+        <ProfileDescription />
+        <Media />
+        <Products />
+        <SpecialOffers />
+    </div>
   </el-row>
 </template>
 <script>

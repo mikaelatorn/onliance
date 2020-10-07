@@ -31,7 +31,6 @@
   </el-menu>
 </template>
 <script>
-const fb = require('../firebaseConfig.js')
 export default {
   data () {
     return {
@@ -40,7 +39,7 @@ export default {
   },
   methods: {
     logout () {
-      fb.auth.signOut().then(() => {
+      this.$fb.auth.signOut().then(() => {
         this.$store.dispatch('clearData')
         this.$router.push({ name: 'login' })
       }).catch(err => {
