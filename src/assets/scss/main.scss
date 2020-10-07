@@ -1,5 +1,6 @@
 @import '_variables';
 @import '_auth';
+@import '_search';
 
 * {
     box-sizing: border-box;
@@ -20,6 +21,16 @@ body {
     .el-row {
         width: 100%;
     }
+}
+
+.el-row {
+    margin: 0 !important;
+}
+
+.inner-row {
+    max-width: 1000px;
+    margin: auto;
+    padding-top: 3rem;
 }
 
 .el-menu-vertical-demo {
