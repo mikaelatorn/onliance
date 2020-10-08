@@ -1,7 +1,7 @@
 <template>
     <el-row>
       <TopBar name="Dashboard" />
-      <el-row class="wrapper-container">
+      <div class="inner-row">
         <el-row :gutter="10" class="justify-center">
           <el-col :xs="24" :sm="14" :md="16">
             <el-card shadow="never">
@@ -11,7 +11,7 @@
             </el-card>
           </el-col>
         </el-row>
-      </el-row>
+      </div>
     </el-row>
 </template>
 <script>

@@ -28,20 +28,62 @@ export const store = new Vuex.Store({
       commit('setCurrentUser', null)
       commit('setUserProfile', {})
     },
-    updateProfile ({ commit, state, dispatch }, form) {
+    updateProfileImage ({ state, dispatch }, form) {
       console.log(form)
+      if (form.image) {
+        fb.storage.child('images/'+ form.image.raw.name).put(form.image.raw).then(res => {
+          res.ref.getDownloadURL().then((downloadURL) => {
+            console.log(downloadURL)
+            form.image = downloadURL
+            dispatch('updateProfileNoImage', form)
+          })
+        }).catch(err => console.log('ERROR', err))
+      } else {
+        dispatch('updateProfileNoImage', form)
+      }
+    },
+    updateProfileNoImage ({ state, dispatch}, form) {
       fb.usersCollection.doc(state.currentUser.uid).update({
         profile: {
           avatar: form.image,
           slogan: form.slogan,
           description: form.description
         }
-      }).then(res => {
+      }).then(() => {
         dispatch('fetchUserProfile')
       }).catch(err => {
         console.log(err)
       })
-    }
+    },
+    updateProducts ({ state, dispatch }, form) {
+      fb.storage.child('images/'+ form.image.raw.name).put(form.image.raw).then(res => {
+        res.ref.getDownloadURL().then((downloadURL) => {
+        form.image = downloadURL
+        fb.usersCollection.doc(state.currentUser.uid).update({
+            products: fb.firebase.firestore.FieldValue.arrayUnion({
+              image: form.image,
+              name: form.name,
+              description: form.description,
+              price: form.price
+            })
+          }).then(() => {
+            dispatch('fetchUserProfile')
+          }).catch(err => {
+            console.log(err)
+          })
+        })
+      }).catch(err => console.log('ERROR', err))
+    },
+    deleteProduct ({ state, dispatch }, formVal) {
+      console.log(formVal)
+      fb.usersCollection.doc(state.currentUser.uid).update({
+        products: fb.firebase.firestore.FieldValue.arrayRemove(formVal)
+      }).then(() => {
+        dispatch('fetchUserProfile')
+      }).catch(err => {
+        console.log(err)
+      })
+    },
   },
   mutations: {
     setCurrentUser (state, val) {

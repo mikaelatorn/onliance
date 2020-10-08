@@ -12,6 +12,7 @@
 
 body {
     background-color: $white;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 .wrapper-container {
@@ -100,6 +101,10 @@ body {
 
 .mobile-menu {
     text-align: left;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 //animations

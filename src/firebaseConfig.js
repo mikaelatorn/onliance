@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import * as firebase from 'firebase/app';
 import 'firebase/firestore'
 
 // firebase init goes here
@@ -18,7 +18,7 @@ firebase.initializeApp(config)
 const db = firebase.firestore()
 const auth = firebase.auth()
 const currentUser = auth.currentUser
-
+const storage = firebase.storage().ref();
 // firebase collections
 const usersCollection = db.collection('users')
 // const postsCollection = db.collection('posts')
@@ -29,7 +29,9 @@ export {
   db,
   auth,
   currentUser,
-  usersCollection
+  usersCollection,
+  storage,
+  firebase
   // postsCollection,
   // commentsCollection,
   // likesCollection

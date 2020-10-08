@@ -75,6 +75,7 @@
           <el-input
             v-model="form.description"
             textarea
+            :rows="2"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -125,12 +126,12 @@ export default {
     newPic(file) {
       this.fileList = [];
       this.fileList[0] = file;
-      this.form.image = file.url;
+      this.form.image = file;
       this.disabled = true;
     },
     save () {
       console.log(this.form.image)
-      this.$store.dispatch('updateProfile', this.form).then((res) => {
+      this.$store.dispatch('updateProfileImage', this.form).then((res) => {
         this.$root.$emit('create-alert', { title: 'Information successfully saved!', type: 'success'})
         this.editAboutDialog = false
       }).catch((err) => {
