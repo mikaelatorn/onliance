@@ -25,14 +25,14 @@
           </div>
         </el-card>
       </el-col>
-      <transition-group name="fade" mode="out-in" tag="div">
-        <el-col v-for="(p, index) in userProfile.products" v-bind:key="p.name + index" :xs="12" :sm="12" :md="6" :lg="6">
+      <transition-group name="fade" mode="out-in" class="products-transition" tag="div">
+        <el-col v-for="(p, index) in userProfile.products" v-bind:key="p.name + index" :xs="24" :sm="12" :md="6" :lg="6">
           <el-card class="product-card" :body-style="{ padding: '0px' }">
             <div class="menu-btn">
               <el-dropdown trigger="click" @command="handleCommand($event, p)">
                 <el-button icon="el-icon-more" circle></el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="edit" icon="el-icon-edit">Edit</el-dropdown-item>
+                  <!-- <el-dropdown-item command="edit" icon="el-icon-edit">Edit</el-dropdown-item> -->
                   <el-dropdown-item command="delete" icon="el-icon-delete">Delete</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -44,7 +44,7 @@
               <br>
               <small>{{ p.description }}</small>
               <div class="bottom clearfix">
-                <time class="time"><small>{{ p.price }}</small></time>
+                <time class="time"><small><strong>{{ p.price }}</strong> SEK</small></time>
               </div>
             </div>
           </el-card>
@@ -54,7 +54,7 @@
      <!-- Edit dialog -->
     <el-dialog title="Add Product" :visible.sync="editProductDialog">
       <el-form :model="form">
-        <el-form-item label="Company Logo/Avatar">
+        <el-form-item label="Image">
           <!-- <el-input v-model="form.image" autocomplete="off"></el-input> -->
           <el-upload
             action="#"

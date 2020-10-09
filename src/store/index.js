@@ -56,6 +56,7 @@ export const store = new Vuex.Store({
       })
     },
     updateProducts ({ state, dispatch }, form) {
+      console.log('form', form)
       fb.storage.child('images/'+ form.image.raw.name).put(form.image.raw).then(res => {
         res.ref.getDownloadURL().then((downloadURL) => {
         form.image = downloadURL
