@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import moment from 'moment'
 import { store } from './store'
 
 // Styles
@@ -16,6 +17,7 @@ import '@/assets/scss/main.scss'
 const fb = require('./firebaseConfig.js')
 
 Vue.use(ElementUI)
+Vue.use(moment);
 
 Vue.config.productionTip = false
 
