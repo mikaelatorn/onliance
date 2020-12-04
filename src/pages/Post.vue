@@ -4,7 +4,7 @@
     <div class="inner-row">
       <el-row :gutter="10" class="justify-center">
         <el-col :xs="24" :sm="14" :md="16">
-           <Post v-if="post" :post="post" />
+           <Post v-if="post" :post="post" :getPost="getPost" />
         </el-col>
       </el-row>
       <el-row :gutter="10" class="justify-center comment-input">
@@ -19,7 +19,7 @@
       <el-row :gutter="10" class="justify-center">
         <el-col :xs="24" :sm="14" :md="16">
           <transition-group name="list-complete" tag="div">
-            <Comment v-for="comment in comments" :key="comment.id" :comment="comment" />
+            <Comment v-for="comment in comments" :key="comment.id" :comment="comment" :getComments="getComments"/>
           </transition-group>
         </el-col>
       </el-row>
@@ -52,21 +52,26 @@ export default {
     }
   },
   beforeMount () {
-    this.$store.dispatch('getPostById', this.$route.params.id).then(res => {
-      console.log(res)
-      this.post = res
-    }, err => {
-      console.error(err)
-    })
+    this.getPost()
     this.getComments()
   },
   methods: {
+    getPost() {
+      this.$store.dispatch('getPostById', this.$route.params.id).then(res => {
+        console.log(res)
+        this.post = res
+      }, err => {
+        console.error(err)
+        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+      })
+    },
     getComments () {
       this.$store.dispatch('getCommentsByPostId', this.$route.params.id).then(res => {
         console.log('comments', res)
         this.comments = res
       }, err => {
         console.error(err)
+        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
       })
     },
     submitComment () {
@@ -76,9 +81,11 @@ export default {
       }
       this.$store.dispatch('createComment', object).then(res => {
         console.log(res)
+        this.$root.$emit('create-alert', { title: 'Comment submitted!', type: 'success'})
         this.getComments()
       }, err => {
         console.error(err)
+        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
       })
     }
   }

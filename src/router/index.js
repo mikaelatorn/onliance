@@ -77,6 +77,18 @@ const routes = [{
       import(/* webpackChunkName: "dashboard" */ '../pages/Post.vue')
     // meta: { requiresAuth: true }
   }, {
+    path: 'activity',
+    name: 'activity',
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ '../pages/Activity.vue')
+    // meta: { requiresAuth: true }
+  }, {
+    path: 'conversations',
+    name: 'conversations',
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ '../pages/Conversations.vue')
+    // meta: { requiresAuth: true }
+  }, {
     path: 'settings',
     name: 'settings',
     component: () =>

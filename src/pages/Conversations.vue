@@ -1,0 +1,54 @@
+<template>
+    <el-row>
+      <TopBar name="My Conversations" />
+      <div class="inner-row">
+        <el-row :gutter="10" class="justify-center">
+          <el-col :xs="24" :sm="14" :md="16">
+            <transition-group name="list-complete" tag="div">
+              <Post v-for="post in posts" :key="post.title" :post="post" />
+            </transition-group>
+          </el-col>
+        </el-row>
+      </div>
+    </el-row>
+</template>
+<script>
+import TopBar from '@/components/TopBar'
+import Post from '@/components/PostDashboard'
+import { mapState } from 'vuex'
+import { setTimeout } from 'timers';
+export default {
+  components: {
+    TopBar,
+    Post
+  },
+  data () {
+    return {
+      posts: []
+    }
+  },
+  beforeMount () {
+    this.getPostsByComments()
+  },
+  methods: {
+    getPostsByComments () {
+      this.$store.dispatch('getPostsByCommentsFromUserId').then(res => {
+        setTimeout(() => {
+          this.sanitizePosts(res)
+        }, 500)
+      }, err => {
+        console.error(err)
+        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+      })
+    },
+    sanitizePosts (posts) {
+      let result = posts.filter((post, index, self) =>
+        index === self.findIndex((t) => (
+          t.id === post.id
+        ))
+      )
+      this.posts = result
+    }
+  }
+}
+</script>

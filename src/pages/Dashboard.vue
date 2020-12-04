@@ -4,44 +4,54 @@
       <div class="inner-row">
         <el-row :gutter="10" class="justify-center">
           <el-col :xs="24" :sm="14" :md="16">
+            <el-select @change="changeQuery()" v-model="category" placeholder="Select Category">
+              <el-option
+                v-for="item in pageCategories"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
             <el-button @click="createPostDialog = true">Create Post</el-button>
             <transition-group name="list-complete" tag="div">
-              <Post v-for="post in posts" :key="post.title" :post="post" />
+              <div v-for="post in posts" :key="post.title">
+                <Post v-if="post.category === $route.query.category || !$route.query.category || $route.query.category === 'All-categories'" :post="post" />
+              </div>
             </transition-group>
           </el-col>
         </el-row>
       </div>
       <el-dialog title="Create Post" :visible.sync="createPostDialog">
-      <el-form :model="form">
-        <el-form-item label="Title">
-          <el-input v-model="form.title" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="Text/Description">
-          <el-input
-            v-model="form.text"
-            type="textarea"
-            :rows="3"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="Category">
-          <el-select v-model="form.category" placeholder="Select">
-            <el-option
-              v-for="item in categories"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Number of participants">
-          <el-input-number size="small" v-model="form.totalParticipants"></el-input-number>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="createPostDialog = false">Cancel</el-button>
-        <el-button type="primary" @click="createPost()">Save</el-button>
-      </span>
+        <el-form :model="form">
+          <el-form-item label="Title">
+            <el-input v-model="form.title" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="Text/Description">
+            <el-input
+              v-model="form.text"
+              type="textarea"
+              :rows="3"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="Category">
+            <el-select v-model="form.category" placeholder="Select">
+              <el-option
+                v-for="item in categories"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Number of participants">
+            <el-input-number size="small" v-model="form.totalParticipants"></el-input-number>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="createPostDialog = false">Cancel</el-button>
+          <el-button type="primary" @click="createPost()">Save</el-button>
+        </span>
     </el-dialog>
     </el-row>
 </template>
@@ -80,6 +90,29 @@ export default {
           label: 'Other'
         }
       ],
+      pageCategories: [
+        {
+          value: 'All-categories',
+          label: 'All categories'
+        },
+        {
+          value: 'Marketing',
+          label: 'Marketing'
+        },
+        {
+          value: 'Consignment',
+          label: 'Consignment'
+        },
+        {
+          value: 'Sales',
+          label: 'Sales'
+        },
+        {
+          value: 'Other',
+          label: 'Other'
+        }
+      ],
+      category: 'All-categories',
       form: {
         title: '',
         description: '',
@@ -92,6 +125,11 @@ export default {
     this.getPosts()
   },
   methods: {
+    changeQuery () {
+      console.log(this.category)
+      // this.$route.query = { category: this.category } 
+      this.$router.push({ name: 'dashboard', query: { category: this.category } })
+    },
     getPosts () {
       this.$store.dispatch('getPosts').then(res => {
         console.log(res)

@@ -98,7 +98,7 @@ export const store = new Vuex.Store({
           totalParticipants: form.totalParticipants,
           currentParticipants: [],
           status: 'active',
-          createdAt: moment().format('DD-MM-YYYY HH:mm')
+          timestamp: fb.firebase.firestore.FieldValue.serverTimestamp()
         }).then(res => {
           dispatch('getPosts')
           resolve(res)
@@ -110,7 +110,7 @@ export const store = new Vuex.Store({
     },
     getPosts ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        fb.postsCollection.get()
+        fb.postsCollection.orderBy('timestamp', 'desc').get()
         .then(function(querySnapshot) {
           let posts = []
           querySnapshot.forEach(function(doc) {
@@ -135,9 +135,36 @@ export const store = new Vuex.Store({
         })
       })
     },
+    joinPost({ state, dispatch}, post) {
+      return new Promise((resolve, reject) => {
+        fb.postsCollection.doc(post.id).update({
+            currentParticipants: fb.firebase.firestore.FieldValue.arrayUnion(state.currentUser.uid)
+        })
+        .then(function(res) {
+          dispatch('getPosts')
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    leavePost({ state, dispatch}, post) {
+      return new Promise((resolve, reject) => {
+        fb.postsCollection.doc(post.id).update({
+          currentParticipants: fb.firebase.firestore.FieldValue.arrayRemove(state.currentUser.uid)
+        })
+        .then(function(res) {
+          dispatch('getPosts')
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     getCommentsByPostId ({ commit, state }, id) {
       return new Promise((resolve, reject) => {
-        fb.commentsCollection.where("parentId", "==", id).get()
+        fb.commentsCollection.where("parentId", "==", id)
+        .orderBy('timestamp', 'desc').get()
         .then(function(querySnapshot) {
           let comments = []
           querySnapshot.forEach(function(doc) {
@@ -158,7 +185,7 @@ export const store = new Vuex.Store({
           userId: state.currentUser.uid,
           parentId: data.parentId,
           author: state.userProfile.fullName,
-          createdAt: moment().format('DD-MM-YYYY HH:mm')
+          timestamp: fb.firebase.firestore.FieldValue.serverTimestamp()
         }).then(res => {
           resolve(res)
         }).catch(err => {
@@ -166,6 +193,59 @@ export const store = new Vuex.Store({
         })
       })
     },
+    deleteComment ({ state, dispatch}, data) {
+      return new Promise((resolve, reject) => {
+        console.log(data)
+        fb.commentsCollection.doc(data.id).delete()
+        .then(res => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    getPostsByParticipation ({ state, dispatch }) {
+      // get posts where userid is in participation list
+      return new Promise((resolve, reject) => {
+        fb.postsCollection.where("currentParticipants", "array-contains", state.currentUser.uid)
+        .orderBy('timestamp', 'desc').get()
+        .then(function(querySnapshot) {
+          let posts = []
+          querySnapshot.forEach(function(doc) {
+            let tempPost = doc.data()
+            tempPost.id = doc.id
+            posts.push(tempPost)
+          });
+          resolve(posts)
+        }, err => {
+          reject(err)
+        })
+      })
+    },
+    getPostsByCommentsFromUserId ({ state, dispatch }) {
+      // get comments where userId = userid
+      // get posts where the results is are parent ids
+      return new Promise((resolve, reject) => {
+        fb.commentsCollection.where("userId", "==", state.currentUser.uid).get()
+        .then(function(querySnapshot) {
+          let posts = []
+          querySnapshot.forEach(function(doc) {
+            let id = doc.data().parentId
+            fb.postsCollection.doc(id).get()
+            .then(res => {
+              let tempPost = res.data()
+              tempPost.id = res.id
+              posts.push(tempPost)
+            }, err => {
+              reject(err)
+            })
+          })
+          resolve(posts)
+        }, err => {
+          reject(err)
+        })
+      })
+    }
   },
   mutations: {
     setPosts (state, val) {
