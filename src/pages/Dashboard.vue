@@ -12,7 +12,7 @@
                 :value="item.value">
               </el-option>
             </el-select>
-            <el-button @click="createPostDialog = true">Create Post</el-button>
+            <!-- <el-button @click="createPostDialog = true">Create Post</el-button> -->
             <transition-group name="list-complete" tag="div">
               <div v-for="post in posts" :key="post.title">
                 <Post v-if="post.category === $route.query.category || !$route.query.category || $route.query.category === 'All-categories'" :post="post" />

@@ -71,9 +71,18 @@ export default {
             background: 'rgba(0, 0, 0, 0.7)'
           })
           fb.auth.signInWithEmailAndPassword(this.form.email, this.form.password).then(user => {
-            this.$store.commit('setCurrentUser', user.user)
-            this.$store.dispatch('fetchUserProfile')
-            this.$router.push({ name: 'dashboard' })
+            console.log(user.user.emailVerified)
+            if (user.user.emailVerified) {
+              this.$store.commit('setCurrentUser', user.user)
+              this.$store.dispatch('fetchUserProfile')
+              this.$router.push({ name: 'dashboard' })
+            } else {
+              this.$store.dispatch('logout').then(res => {
+                this.errorMsg = 'Your email is not verified!'
+              }).catch(err => {
+                console.log(err)
+              })
+            }
             loading.close()
           }).catch(err => {
             console.log(err)

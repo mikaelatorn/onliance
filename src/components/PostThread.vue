@@ -4,6 +4,10 @@
         <h3>{{ post.title }}</h3>
         <p>{{ post.text }}</p>
         <div class="flex-container">
+          <div class="flex-container">
+            <i class="el-icon-s-comment"></i>
+            {{ comments ? comments.length : 0  }}
+          </div>
           <div class="align-right">
             <span> 
               {{ post.currentParticipants.length }}
@@ -30,6 +34,10 @@ export default {
     },
     getPost: {
       type: Function
+    },
+    comments: {
+      type: Array,
+      default: () => []
     }
   },
   methods: {

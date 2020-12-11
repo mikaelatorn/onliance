@@ -102,15 +102,22 @@ export default {
             spinner: 'el-icon-loading',
             background: 'rgba(0, 0, 0, 0.7)'
           })
-          fb.auth.createUserWithEmailAndPassword(this.form.email, this.form.password).then(user => {
-            this.$store.commit('setCurrentUser', user.user)
+          this.$store.dispatch('signup', this.form).then(user => {
             // create user obj
+            console.log('USER', user)
             fb.usersCollection.doc(user.user.uid).set({
               fullName: this.form.fullName,
-              company: this.form.company
+              company: this.form.company,
+              email: this.form.email
             }).then(() => {
+              this.$store.dispatch('validateEmail', user.user)
               this.$store.dispatch('fetchUserProfile')
-              this.$router.push({ name: 'dashboard' })
+              this.$store.dispatch('sendConfirmEmail').then(() => {
+                console.log('in here')
+                this.$router.push({ name: 'signup-success' })
+              }, err => {
+                console.error(err)
+              })
               loading.close()
             }).catch(err => {
               console.log(err)

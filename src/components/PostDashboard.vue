@@ -4,6 +4,7 @@
         <h3 @click="goToPage(post)">{{ post.title }}</h3>
         <div class="flex-container">
           <el-button size="mini" class="category-btn" plain :type="getColor(post.category)">{{ post.category }}</el-button>
+          <div class="flex-container"><i class="el-icon-s-comment"></i> {{ comments.length }}</div>
           <div class="align-right">
             <span> 
               {{ post.currentParticipants.length }}
@@ -29,7 +30,24 @@ export default {
       default: () => {}
     }
   },
+  data () {
+    return {
+      comments: []
+    }
+  },
+  beforeMount () {
+    this.getComments()
+  },
   methods: {
+    getComments () {
+      this.$store.dispatch('getCommentsByPostId', this.post.id).then(res => {
+        console.log('comments', res)
+        this.comments = res
+      }, err => {
+        console.error(err)
+        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+      })
+    },
     formatDate(date) {
       return moment(date).format('DD-MM-YYYY HH:mm') 
     },

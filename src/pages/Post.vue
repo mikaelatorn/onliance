@@ -4,7 +4,7 @@
     <div class="inner-row">
       <el-row :gutter="10" class="justify-center">
         <el-col :xs="24" :sm="14" :md="16">
-           <Post v-if="post" :post="post" :getPost="getPost" />
+           <Post v-if="post" :post="post" :getPost="getPost" :comments="comments" />
         </el-col>
       </el-row>
       <el-row :gutter="10" class="justify-center comment-input">

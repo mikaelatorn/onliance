@@ -41,12 +41,30 @@ export default {
         this.getComments()
         this.$root.$emit('create-alert', { title: 'Comment deleted!', type: 'success'})
       }, err => {
-        console.error('Something went wrong')
+        console.error(err)
         this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
       })
     },
     sendReport () {
-
+      let hasReported = false
+      if (this.comment.reports && this.comment.reports.length) {
+        for (var i in this.comment.reports) {
+          if (this.comment.reports[i].userId === this.$store.state.currentUser.uid) {
+            hasReported = true
+            this.$root.$emit('create-alert', { title: 'Comment reported, an Administrator will evaluate the reports as soon as possible!', type: 'success'})
+            console.log('we made it here')
+            break;
+          }
+        }
+      }
+      if (hasReported === false) {
+        this.$store.dispatch('reportComment', this.comment).then(res => {
+          this.$root.$emit('create-alert', { title: 'Comment reported, an Administrator will evaluate the reports as soon as possible!', type: 'success'})
+        }, err => {
+          console.error(err)
+          this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+        })
+      }
     }
   }
 }
