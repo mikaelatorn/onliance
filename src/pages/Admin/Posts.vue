@@ -4,65 +4,68 @@
       <div class="inner-row">
         <el-row :gutter="10" class="justify-center">
           <el-col :xs="24" :sm="24" :md="20">
-            <el-input
-              v-model="search"
-              width="200"
-              size="mini"
-              placeholder="Type to search"/>
-            <el-button @click="createPostDialog = true">Create Post</el-button>
-                 <el-table
-                  :data="posts.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
-                  style="width: 100%">
-                  <el-table-column
-                    label="Title"
-                    prop="title">
-                  </el-table-column>
-                  <el-table-column
-                    label="Current Participants"
-                    prop="currentParticipants.length">
-                    <template slot-scope="scope">
-                      <span>
-                        {{ scope.row.currentParticipants.length }}
-                        /
-                        {{ scope.row.totalParticipants }}  
-                      </span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="Status"
-                    prop="status">
-                  </el-table-column>
-                  <el-table-column
-                    label="Category"
-                    prop="category">
-                    <template slot-scope="scope">
-                      <el-button size="mini" class="category-btn" plain :type="getColor(scope.row.category)">{{ scope.row.category }}</el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="Created"
-                    prop="timestamp">
-                    <template slot-scope="scope">
-                      {{ formatDate(scope.row.timestamp.toDate())}}
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    align="right">
-                    <template slot-scope="scope">
-                      <el-dropdown @command="handleCommand($event, scope.$index, scope.row)">
-                        <span class="el-dropdown-link">
-                          <i class="el-icon-more"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item command="email" icon="el-icon-message">Email participants</el-dropdown-item>
-                          <el-dropdown-item command="complete" icon="el-icon-success">Set to complete</el-dropdown-item>
-                          <el-dropdown-item command="view" icon="el-icon-view">View post</el-dropdown-item>
-                          <el-dropdown-item command="delete" icon="el-icon-delete">Delete post</el-dropdown-item>
-                        </el-dropdown-menu>
-                      </el-dropdown>
-                    </template>
-                  </el-table-column>
-                </el-table>
+            <div class="button-container">
+              <el-input
+                v-model="search"
+                width="200"
+                placeholder="Type to search"
+                class="search-input"
+              />
+              <el-button @click="createPostDialog = true">Create Post</el-button>
+            </div>
+            <el-table
+              :data="posts.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
+              style="width: 100%">
+              <el-table-column
+                label="Title"
+                prop="title">
+              </el-table-column>
+              <el-table-column
+                label="Current Participants"
+                prop="currentParticipants.length">
+                <template slot-scope="scope">
+                  <span>
+                    {{ scope.row.currentParticipants.length }}
+                    /
+                    {{ scope.row.totalParticipants }}  
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="Status"
+                prop="status">
+              </el-table-column>
+              <el-table-column
+                label="Category"
+                prop="category">
+                <template slot-scope="scope">
+                  <el-button size="mini" class="category-btn" plain :type="getColor(scope.row.category)">{{ scope.row.category }}</el-button>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="Created"
+                prop="timestamp">
+                <template slot-scope="scope">
+                  {{ formatDate(scope.row.timestamp.toDate())}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                align="right">
+                <template slot-scope="scope">
+                  <el-dropdown @command="handleCommand($event, scope.$index, scope.row)">
+                    <span class="el-dropdown-link">
+                      <i class="el-icon-more"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item command="email" icon="el-icon-message">Email participants</el-dropdown-item>
+                      <el-dropdown-item command="complete" icon="el-icon-success">Set to complete</el-dropdown-item>
+                      <el-dropdown-item command="view" icon="el-icon-view">View post</el-dropdown-item>
+                      <el-dropdown-item command="delete" icon="el-icon-delete">Delete post</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-col>
         </el-row>
       </div>

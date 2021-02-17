@@ -4,11 +4,14 @@
       <div class="inner-row">
         <el-row :gutter="10" class="justify-center">
           <el-col :xs="24" :sm="24" :md="20">
-            <el-input
-              v-model="search"
-              width="200"
-              size="mini"
-              placeholder="Type to search"/>
+            <div class="button-container">
+              <el-input
+                v-model="search"
+                width="200"
+                placeholder="Type to search"
+                class="search-input"
+              />
+            </div>
                  <el-table
                   :data="reports.filter(data => !search || data.text.toLowerCase().includes(search.toLowerCase()))"
                   style="width: 100%">

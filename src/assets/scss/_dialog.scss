@@ -1,8 +1,12 @@
-.el-dialog__header {
-  text-align: left;
+.el-dialog {
+  max-width: 420px;
+  .el-dialog__header {
+    text-align: left;
+  }
+  
+  .el-dialog__body {
+    padding: 10px 20px;
+    text-align: left;
+  }
 }
 
-.el-dialog__body {
-  padding: 10px 20px;
-  text-align: left;
-}

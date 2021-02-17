@@ -1,5 +1,8 @@
 .el-button {
   transition: all .3s ease-in-out; 
+  &.join-btn {
+    padding: 7px 20px;
+  }
 }
 
 .el-button--primary {
@@ -9,7 +12,6 @@
     background-color: darken($o-green, 7%);
     border-color: darken($o-green, 7%);
   }
-  
 }
 
 .button-auth {

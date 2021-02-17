@@ -39,8 +39,8 @@ body {
 #app-inner {
     min-height: 100vh;
     display: flex;
-    color: #4A4A4A;
-    background-color: #F5F6FA;
+    color: $text-color;
+    background-color: $background;
     .el-row {
         width: 100%;
     }
@@ -53,11 +53,14 @@ body {
 .inner-row {
     max-width: 1000px;
     margin: auto;
-    padding-top: 3rem;
+    padding-top: 6rem;
 }
 
 .el-menu-vertical-demo {
     height: inherit;
+    position: fixed;
+    height: 100%;
+    z-index: 100;
 }
 
 .onliance-logomark-nav {
@@ -67,11 +70,15 @@ body {
 }
 
 .title {
-    background-color: #FFFFFF;
+    background-color: $white;
     border-bottom: 1px solid $border-grey;
     display: flex;
     align-items: center;
+    position: fixed;
+    width: 100%;
+    left: 64px;
     padding: .5rem;
+    z-index: 10;
     h2 {
         text-align: left;
         margin: .3rem 1rem .2rem;
@@ -144,7 +151,7 @@ body {
 
 .el-alert {
     position: absolute !important;
-    z-index: 99;
+    z-index: 999;
 }
 
 .flex {
@@ -153,4 +160,18 @@ body {
 
 .justify-center {
     justify-content: center;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+@media screen and (max-width: 767px) {
+    .title {
+        left: 0;
+    }
+
+    .inner-row {
+        padding-top: 5rem;
+    }
 }

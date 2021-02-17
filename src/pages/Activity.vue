@@ -4,14 +4,18 @@
       <div class="inner-row">
         <el-row :gutter="10" class="justify-center">
           <el-col :xs="24" :sm="14" :md="16">
-            <el-select @change="changeQuery()" v-model="category" placeholder="Select Category">
-              <el-option
-                v-for="item in pageCategories"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <div class="flex-container">
+              <div class="align-right">
+                <el-select @change="changeQuery()" v-model="category" placeholder="Select Category">
+                  <el-option
+                    v-for="item in pageCategories"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
+            </div>
             <transition-group name="list-complete" tag="div">
               <div v-for="post in posts" :key="post.title">
                 <Post v-if="isInCategory(post) || !$route.query.category || $route.query.category === 'all-activity'" :post="post" />

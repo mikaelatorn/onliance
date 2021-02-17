@@ -12,13 +12,18 @@
       </el-dropdown>
     </div>
     <h5>{{ comment.author }}</h5>
-    <p class="light-grey">{{ formatDate(comment.timestamp.toDate()) }}</p>
+    <p class="light-grey">{{ formatDate.full(comment.timestamp.toDate()) }}</p>
     <p>{{ comment.text }}</p>
   </el-card>
 </template>
 <script>
-import moment from 'moment'
+import { formatDate } from '@/config/formatDate.js'
 export default {
+  data () {
+    return {
+      formatDate: formatDate
+    }
+  },
   props: {
     comment: {
       type: Object,
@@ -29,9 +34,6 @@ export default {
     }
   },
   methods: {
-    formatDate (date) {
-      return moment(date).format('DD-MM-YYYY HH:mm') 
-    },
     handleCommand(command) {
       if (command === 'delete') this.deleteComment()
       else if (command === 'report') this.sendReport()
