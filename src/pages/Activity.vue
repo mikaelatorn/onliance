@@ -18,8 +18,9 @@
             </div>
             <transition-group name="list-complete" tag="div">
               <div v-for="post in posts" :key="post.title">
-                <Post v-if="isInCategory(post) || !$route.query.category || $route.query.category === 'all-activity'" :post="post" />
+                <Post v-if="isInCategory(post) || !$route.query.category || $route.query.category === 'all-activity'" :post="post" :fullView="false" />
               </div>
+              <EmptyContent v-if="!posts || posts.length === 0" contentType="Activities" />
             </transition-group>
           </el-col>
         </el-row>

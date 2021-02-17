@@ -5,7 +5,8 @@
         <el-row :gutter="10" class="justify-center">
           <el-col :xs="24" :sm="14" :md="16">
             <transition-group name="list-complete" tag="div">
-              <Post v-for="post in posts" :key="post.title" :post="post" />
+              <Post v-for="post in posts" :key="post.title" :post="post" :fullView="false" />
+              <EmptyContent v-if="!posts || posts.length === 0" contentType="Conversations" />
             </transition-group>
           </el-col>
         </el-row>
@@ -15,7 +16,6 @@
 <script>
 import TopBar from '@/components/TopBar'
 import Post from '@/components/PostDashboard'
-import { mapState } from 'vuex'
 import { setTimeout } from 'timers';
 export default {
   components: {

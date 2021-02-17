@@ -17,7 +17,7 @@
             </div>
             <transition-group name="list-complete" tag="div">
               <div v-for="post in posts" :key="post.title">
-                <Post v-if="post.category === $route.query.category || !$route.query.category || $route.query.category === 'All-categories'" :post="post" />
+                <Post v-if="post.category === $route.query.category || !$route.query.category || $route.query.category === 'All-categories'" @change-category="changeCategory" :post="post" />
               </div>
             </transition-group>
           </el-col>
@@ -94,6 +94,11 @@ export default {
     changeQuery () {
       console.log(this.category)
       this.$router.push({ name: 'dashboard', query: { category: this.category } })
+    },
+    changeCategory (category) {
+      console.log(category)
+      this.category = category
+      this.changeQuery()
     },
     getPosts () {
       this.$store.dispatch('getPosts').then(res => {

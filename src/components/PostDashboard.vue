@@ -5,7 +5,7 @@
           <h3 @click="goToPage(post)">{{ post.title }} </h3>
         </div>
         <div class="flex-container post-details">
-          <el-button size="mini" class="category-btn" plain :type="getColor.tag(post.category)">{{ post.category }}</el-button>
+          <el-button @click="callChangeCategory()" size="mini" class="category-btn" plain :type="getColor.tag(post.category)">{{ post.category }}</el-button>
           <div class="align-right">
             <span> 
               <div class="flex-container inline-block"><i class="el-icon-s-comment"></i> {{ comments.length }}</div>
@@ -13,8 +13,10 @@
               {{ post.currentParticipants.length }}
               /
               <span>{{ post.totalParticipants }}</span>
-              <el-button v-if="isAmongCurrentParticipants()" class="join-btn" size="mini" @click="leavePost()">Leave</el-button>
-              <el-button v-else :disabled="post.currentParticipants.length === post.totalParticipants" class="join-btn" size="mini" @click="joinPost()">Join</el-button>
+              <span v-if="fullView">
+                <el-button v-if="isAmongCurrentParticipants()" class="join-btn" size="mini" @click="leavePost()">Leave</el-button>
+                <el-button v-else :disabled="post.currentParticipants.length === post.totalParticipants" class="join-btn" size="mini" @click="joinPost()">Join</el-button>
+              </span>
             </span>
           </div>
         </div>
@@ -32,6 +34,14 @@ export default {
     post: {
       type: Object,
       default: () => {}
+    },
+    changeCategory: {
+      type: Function,
+      default: () => {}
+    },
+    fullView: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -63,6 +73,9 @@ export default {
         if (this.post.currentParticipants[i] === this.$store.state.currentUser.uid) return true
       }
       return false
+    },
+    callChangeCategory () {
+      this.$emit('change-category', this.post.category);
     },
     joinPost () {
       console.log(this.post)
