@@ -14,6 +14,9 @@
                     :value="item.value">
                   </el-option>
                 </el-select>
+                <el-tooltip class="item" effect="dark" content="This page contains the threads/events you've 'joined'" placement="top">
+                  <i class="el-icon-info info-icon"></i>
+                </el-tooltip>
               </div>
             </div>
             <transition-group name="list-complete" tag="div">
@@ -30,11 +33,12 @@
 <script>
 import TopBar from '@/components/TopBar'
 import Post from '@/components/PostDashboard'
-import { mapState } from 'vuex'
+import EmptyContent from '@/components/EmptyContent'
 export default {
   components: {
     TopBar,
-    Post
+    Post,
+    EmptyContent
   },
   data () {
     return {

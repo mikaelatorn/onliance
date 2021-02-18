@@ -7,6 +7,9 @@
   .el-dialog__body {
     padding: 10px 20px;
     text-align: left;
+    p {
+      word-break: break-word;
+    }
   }
 }
 

@@ -6,6 +6,18 @@
     h3 {
         color: $o-green;
     }
+    .empty-container {
+        text-align: center;
+        padding: 2rem 1rem;
+        h2 {
+            margin-top: 0;
+        }
+    }
+}
+
+.info-icon {
+    font-size: 24px;
+    margin: .3rem 0 0 .5rem;
 }
 
 .shop-name {
