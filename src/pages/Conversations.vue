@@ -6,9 +6,9 @@
           <el-col :xs="24" :sm="14" :md="16">
             <div class="flex-container">
               <div class="align-right">
-                <el-tooltip class="item" effect="dark" content="This page contains threads you've commented on" placement="top">
+                <!-- <el-tooltip class="item" effect="dark" content="This page contains threads you've commented on" placement="top">
                   <i class="el-icon-info info-icon"></i>
-                </el-tooltip>
+                </el-tooltip> -->
               </div>
             </div>
             <transition-group name="list-complete" tag="div">

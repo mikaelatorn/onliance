@@ -5,3 +5,5 @@ Things to do:
 - add functionality to settings page
 - Divide store into multiple modules
 - finish mixin css theme work
+
+- remove or explain join/leave

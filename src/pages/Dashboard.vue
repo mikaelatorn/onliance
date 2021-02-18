@@ -46,9 +46,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Number of participants">
+          <!-- <el-form-item label="Number of participants">
             <el-input-number size="small" v-model="form.totalParticipants"></el-input-number>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="createPostDialog = false">Cancel</el-button>
@@ -82,7 +82,7 @@ export default {
       form: {
         title: '',
         description: '',
-        totalParticipants: null,
+        totalParticipants: 0,
         category: ''
       }   
     }

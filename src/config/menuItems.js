@@ -4,11 +4,11 @@ var menuItems = [
     icon: 'menu',
     name: 'Dashboard'
   },
-  {
-    path: '/app/activity',
-    icon: 'medal-1',
-    name: 'Activity'
-  },
+  // {
+  //   path: '/app/activity',
+  //   icon: 'medal-1',
+  //   name: 'Activity'
+  // },
   {
     path: '/app/conversations',
     icon: 'chat-line-square',

@@ -7,12 +7,12 @@
           <div class="align-right">
             <span> 
               <div class="flex-container inline-block"><i class="el-icon-s-comment"></i> {{ comments ? comments.length : 0  }}</div>
-              <i class="el-icon-user-solid"></i>
-              {{ post.currentParticipants.length }}
+              <!-- <i class="el-icon-user-solid"></i> -->
+              <!-- {{ post.currentParticipants.length }}
               /
-              <span>{{ post.totalParticipants }}</span>
-              <el-button v-if="isAmongCurrentParticipants()" size="small" @click="leavePost()">Leave</el-button>
-              <el-button v-else :disabled="post.currentParticipants.length === post.totalParticipants" size="small" @click="joinPost()">Join</el-button>
+              <span>{{ post.totalParticipants }}</span> -->
+              <!-- <el-button v-if="isAmongCurrentParticipants()" size="small" @click="leavePost()">Leave</el-button>
+              <el-button v-else :disabled="post.currentParticipants.length === post.totalParticipants" size="small" @click="joinPost()">Join</el-button> -->
             </span>
           </div>
         </div>

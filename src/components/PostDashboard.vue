@@ -9,14 +9,14 @@
           <div class="align-right">
             <span> 
               <div class="flex-container inline-block"><i class="el-icon-s-comment"></i> {{ comments.length }}</div>
-              <i class="el-icon-user-solid"></i>
+              <!-- <i class="el-icon-user-solid"></i>
               {{ post.currentParticipants.length }}
               /
-              <span>{{ post.totalParticipants }}</span>
-              <span v-if="fullView">
+              <span>{{ post.totalParticipants }}</span> -->
+              <!-- <span v-if="fullView">
                 <el-button v-if="isAmongCurrentParticipants()" class="join-btn" size="mini" @click="leavePost()">Leave</el-button>
                 <el-button v-else :disabled="post.currentParticipants.length === post.totalParticipants" class="join-btn" size="mini" @click="joinPost()">Join</el-button>
-              </span>
+              </span> -->
             </span>
           </div>
         </div>
