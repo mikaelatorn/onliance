@@ -5,7 +5,7 @@
           <h3 @click="goToPage(post)">{{ post.title }} </h3>
         </div>
         <div class="flex-container post-details">
-          <el-button @click="callChangeCategory()" size="mini" class="category-btn" plain :type="getColor.tag(post.category)">{{ post.category }}</el-button>
+          <el-button @click="callChangeCategory()" size="mini" plain class="category-btn" :type="getColor.tag(post.category)">{{ post.category }}</el-button>
           <div class="align-right">
             <span> 
               <div class="flex-container inline-block"><i class="el-icon-s-comment"></i> {{ comments.length }}</div>

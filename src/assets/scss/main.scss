@@ -1,4 +1,5 @@
 @import '_variables';
+@import '_color-scheme';
 @import '_auth';
 @import '_search';
 @import '_button';
@@ -40,7 +41,7 @@ body {
     min-height: 100vh;
     display: flex;
     color: $text-color;
-    background-color: $background;
+    background-color: $background-second;
     .el-row {
         width: 100%;
     }

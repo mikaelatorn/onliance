@@ -12,7 +12,7 @@
       </el-col>
       <el-col :span="12" class="col-full col-right">
           <div class="right-container">
-            <el-col class="form" :span="8">
+            <el-col class="form" :span="10">
               <h1>Signup</h1>
               <el-form @submit.prevent :rules="rules" ref="form" :model="form">
                 <el-form-item prop="fullName">
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-// import rules from '@/config/validation.js'
+import { rules } from '@/config/validation.js'
 import LeftPanel from '@/components/LeftPanelNotLoggedIn'
 const fb = require('@/firebaseConfig.js')
 export default {
@@ -73,22 +73,12 @@ export default {
       },
       errorMsg: '',
       rules: {
-        fullName: [
-          { required: true, message: 'Name required', trigger: 'blur' }
-        ],
-        email: [
-          { required: true, message: 'Email required', trigger: 'blur' },
-          { type: 'email', message: 'Please input a valid email address', trigger: ['blur', 'change'] }
-        ],
-        password: [
-          { required: true, message: 'Password required', trigger: 'blur' },
-          { min: 6, message: 'Password should be at least 6 characters', trigger: 'blur' }
-        ],
+        fullName: rules.name,
+        email: rules.email,
+        password: rules.newPassword,
+        company: rules.company,
         passwordRepeat: [
           { validator: validatePass, trigger: 'blur' }
-        ],
-        company: [
-          { required: true, message: 'Company name required', trigger: 'blur' }
         ]
       }
     }
@@ -105,11 +95,7 @@ export default {
           this.$store.dispatch('signup', this.form).then(user => {
             // create user obj
             console.log('USER', user)
-            fb.usersCollection.doc(user.user.uid).set({
-              fullName: this.form.fullName,
-              company: this.form.company,
-              email: this.form.email
-            }).then(() => {
+            this.$store.dispatch('setupAccount', { form: this.form, user: user}).then(() => {
               this.$store.dispatch('validateEmail', user.user)
               this.$store.dispatch('fetchUserProfile')
               this.$store.dispatch('sendConfirmEmail').then(() => {

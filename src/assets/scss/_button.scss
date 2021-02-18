@@ -17,3 +17,14 @@
 .button-auth {
   width: 100%;
 }
+
+.theme-button {
+  position: fixed;
+  top: -.1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.el-input-group__append {
+  padding: 0;
+}

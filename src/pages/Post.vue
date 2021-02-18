@@ -10,7 +10,7 @@
       <el-row :gutter="10" class="justify-center comment-input">
         <el-col :xs="24" :sm="14" :md="16">
           <el-card shadow="never">
-            <el-input placeholder="Please input" v-model="form.comment">
+            <el-input placeholder="Write your comment here" v-model="form.comment">
               <el-button @click="submitComment()" slot="append" icon="el-icon-s-promotion"></el-button>
             </el-input>
           </el-card>

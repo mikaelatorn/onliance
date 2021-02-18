@@ -46,7 +46,7 @@ h2 {
 
 .left-container {
     background-color: $border-grey;
-    background-image: url('../img/brown_1.png');
+    background-image: url('../img/green-2.png');
     background-position: center;
     background-size: cover;
     height: 100%; 
@@ -54,6 +54,7 @@ h2 {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    color: $white;
     h1 {
         margin-top: .5rem;
     }
@@ -85,7 +86,7 @@ h2 {
     padding: .5rem 0;
 }
 
-@media screen and (max-width:500px) {
+@media screen and (max-width: 800px) {
     .col-left {
         width: 0% !important;
     }

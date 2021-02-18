@@ -6,8 +6,8 @@
           <el-col :xs="24" :sm="14" :md="16">
             <transition-group name="list-complete" tag="div">
               <Post v-for="post in posts" :key="post.title" :post="post" :fullView="false" />
-              <EmptyContent v-if="!posts || posts.length === 0" contentType="Conversations" />
             </transition-group>
+            <EmptyContent v-if="!posts || posts.length === 0" contentType="Conversations" />
           </el-col>
         </el-row>
       </div>

@@ -1,0 +1,32 @@
+@import '_variables';
+
+$themes: (
+  light: (
+    bg-color: $white,
+    background-second: $background-second,
+    background-darker: $background-darker,
+  ),
+  dark: (
+    bg-color: $dark,
+    background-second: $dark-background-second,
+    background-darker: $dark-background-darker,
+  ),
+);
+
+@mixin themed() {
+  @each $theme, $map in $themes {
+    .theme--#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function t($key) {
+  @return map-get($theme-map, $key);
+}

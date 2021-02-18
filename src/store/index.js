@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import moment from 'moment'
 const fb = require('@/firebaseConfig.js')
 
 Vue.use(Vuex)
@@ -16,10 +15,11 @@ export const store = new Vuex.Store({
   state: {
     currentUser: null,
     userProfile: {},
-    posts: []
+    posts: [],
+    theme: 'theme--light'
   },
   actions: {
-    signup ({ commit, dispatch }, data ) {
+    signup ({ commit }, data ) {
       return new Promise((resolve, reject) => {
         fb.auth.createUserWithEmailAndPassword(data.email, data.password).then(user => {
           commit('setCurrentUser', user.user)
@@ -29,29 +29,58 @@ export const store = new Vuex.Store({
         })
       })
     },
-    sendConfirmEmail({ state, dispatch }) {
+    signIn ({}, data) {
+      return new Promise((resolve, reject) => {
+        fb.auth.signInWithEmailAndPassword(data.email, data.password).then(user => {
+          resolve(user)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    setupAccount({}, data) {
+      return new Promise((resolve, reject) => {
+        fb.usersCollection.doc(data.user.user.uid).set({
+          fullName: data.form.fullName,
+          company: data.form.company,
+          email: data.form.email
+        }).then(() => {
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    sendConfirmEmail({ state }) {
       return new Promise((resolve, reject ) => {
         state.currentUser.sendEmailVerification().then(function() {
           console.log('Email sent!')
           resolve()
-        }).catch(function(err) {
+        }).catch(err => {
           console.error(err)
           reject(err)
         });
       })
     },
+    sendResetEmail({}, data) {
+      return new Promise((resolve, reject) => {
+        fb.auth.sendPasswordResetEmail(data).then(() => {
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     validateEmail ({ dispatch }, data) {
-      console.log(data.email)
+      // change this and do it properly
       if (data.email === 'mikaelatornlund@hotmail.se') dispatch('setGod', data)
     },
     setGod ({ dispatch }, data) {
-      console.log('UID', data.uid)
       fb.usersCollection.doc(data.uid).set({
         isGod: true 
       }, { merge: true }).then(() => {
-        console.log('complete')
         dispatch('fetchUserProfile')
-      }, err => {
+      }).catch(err => {
         console.error(err)
       })
     },
@@ -69,7 +98,7 @@ export const store = new Vuex.Store({
           commit('setCurrentUser', null)
           commit('setUserProfile', {})
           resolve(res)
-        }, err => {
+        }).catch(err => {
           reject(err)
         })
       })
@@ -95,7 +124,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    getPosts ({ commit, state }) {
+    getPosts ({ commit }) {
       return new Promise((resolve, reject) => {
         fb.postsCollection.orderBy('timestamp', 'desc').get()
         .then(function(querySnapshot) {
@@ -112,7 +141,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    getPostById ({ commit, state }, id) {
+    getPostById ({}, id) {
       return new Promise((resolve, reject) => {
         fb.postsCollection.doc(id).get()
         .then(function(res) {
@@ -135,7 +164,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    leavePost({ state, dispatch}, post) {
+    leavePost({ state, dispatch }, post) {
       return new Promise((resolve, reject) => {
         fb.postsCollection.doc(post.id).update({
           currentParticipants: fb.firebase.firestore.FieldValue.arrayRemove(state.currentUser.uid)
@@ -148,7 +177,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    getCommentsByPostId ({ commit, state }, id) {
+    getCommentsByPostId ({}, id) {
       return new Promise((resolve, reject) => {
         fb.commentsCollection.where("parentId", "==", id)
         .orderBy('timestamp', 'desc').get()
@@ -165,7 +194,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    createComment ({ state, dispatch }, data) {
+    createComment ({ state }, data) {
       return new Promise((resolve, reject) => {
         fb.commentsCollection.add({
           text: data.comment,
@@ -181,7 +210,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    getComments ({ commit, state }, id) {
+    getComments ({}) {
       return new Promise((resolve, reject) => {
         fb.commentsCollection.orderBy('timestamp', 'desc').get()
         .then(function(querySnapshot) {
@@ -199,7 +228,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    deleteComment ({ state, dispatch}, data) {
+    deleteComment ({}, data) {
       return new Promise((resolve, reject) => {
         console.log(data)
         fb.commentsCollection.doc(data.id).delete()
@@ -210,7 +239,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    reportComment ({ state, dispatch }, data) {
+    reportComment ({ state }, data) {
       return new Promise((resolve, reject) => {
         fb.commentsCollection.doc(data.id).update({
           reports: fb.firebase.firestore.FieldValue.arrayUnion({
@@ -226,7 +255,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    getPostsByParticipation ({ state, dispatch }) {
+    getPostsByParticipation ({ state }) {
       // get posts where userid is in participation list
       return new Promise((resolve, reject) => {
         fb.postsCollection.where("currentParticipants", "array-contains", state.currentUser.uid)
@@ -244,7 +273,7 @@ export const store = new Vuex.Store({
         })
       })
     },
-    getPostsByCommentsFromUserId ({ state, dispatch }) {
+    getPostsByCommentsFromUserId ({ state }) {
       // get comments where userId = userid
       // get posts where the results is are parent ids
       return new Promise((resolve, reject) => {
@@ -301,9 +330,11 @@ export const store = new Vuex.Store({
     },
     setUserProfile (state, val) {
       state.userProfile = val
+    },
+    setTheme(state, theme) {
+      state.theme = theme
     }
   },
   modules: {
-    
   }
 })

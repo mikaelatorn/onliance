@@ -1,5 +1,5 @@
 <template>
-  <el-menu class="el-menu-vertical-demo" :collapse="isCollapse" :router="true">
+  <el-menu default-active="/app/dashboard" class="el-menu-vertical-demo" :collapse="isCollapse" :router="true">
    <div>
     <img
       src="../assets/img/logo-02.svg"

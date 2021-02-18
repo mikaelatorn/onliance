@@ -1,7 +1,7 @@
 Things to do:
-- Divide store into multiple modules
 - Make a generic Dialog component
   - Extract dialog HTML code from Dashboard view
-- Move Firebase functions from auth views to store
-- Make more generic components for authentication views (a lot of redundant code in those files)
-- last read/notifications
+- last read/notifications in threads
+- add functionality to settings page
+- Divide store into multiple modules
+- finish mixin css theme work

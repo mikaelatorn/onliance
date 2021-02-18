@@ -27,6 +27,7 @@
 
 <script>
 import LeftPanel from '@/components/LeftPanelNotLoggedIn'
+import { rules } from '@/config/validation.js'
 export default {
   name: 'Home',
   components: {
@@ -48,10 +49,7 @@ export default {
         passwordRepeat: ''
       },
       rules: {
-        password: [
-          { required: true, message: 'Password required', trigger: 'blur' },
-          { min: 6, message: 'Password should be at least 6 characters', trigger: 'blur' }
-        ],
+        password: rules.newPassword,
         passwordRepeat: [
           { validator: validatePass, trigger: 'blur' }
         ]

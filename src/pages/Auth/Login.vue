@@ -12,7 +12,7 @@
       </el-col>
       <el-col :span="12" class="col-full col-right">
           <div class="right-container">
-            <el-col class="form" :span="8">
+            <el-col class="form" :span="10">
               <h1>Login</h1>
               <small style="margin-bottom: 1rem">Don't have an account?
                 <router-link class="link" :to="{ name: 'signup' }" >Signup here</router-link>
@@ -37,7 +37,7 @@
 
 <script>
 import LeftPanel from '@/components/LeftPanelNotLoggedIn'
-const fb = require('@/firebaseConfig.js')
+import { rules } from '@/config/validation.js'
 export default {
   name: 'Home',
   components: {
@@ -51,13 +51,8 @@ export default {
       },
       errorMsg: '',
       rules: {
-        email: [
-          { required: true, message: 'Email required', trigger: 'blur' },
-          { type: 'email', message: 'Please input a valid email address', trigger: ['blur', 'change'] }
-        ],
-        password: [
-          { required: true, message: 'Password required', trigger: 'blur' }
-        ]
+        email : rules.email,
+        password: rules.password
       }
     }
   },
@@ -70,8 +65,7 @@ export default {
             spinner: 'el-icon-loading',
             background: 'rgba(0, 0, 0, 0.7)'
           })
-          fb.auth.signInWithEmailAndPassword(this.form.email, this.form.password).then(user => {
-            console.log(user.user.emailVerified)
+          this.$store.dispatch("signIn", this.form).then(user => {
             if (user.user.emailVerified) {
               this.$store.commit('setCurrentUser', user.user)
               this.$store.dispatch('fetchUserProfile')

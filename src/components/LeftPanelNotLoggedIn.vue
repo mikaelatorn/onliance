@@ -7,8 +7,8 @@
         type="image/svg+xml"
         alt="Onliance Logomark"
       >
-      <h1>Company name</h1>
-      <h2>Company slogan here</h2>
+      <h1>Welcome!</h1>
+      <h2>This is my simple forum project</h2>
     </div>
   </div>
 </template>

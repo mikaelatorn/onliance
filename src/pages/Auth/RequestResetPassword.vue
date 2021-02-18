@@ -46,7 +46,7 @@
 </template>
 <script>
 import LeftPanel from '@/components/LeftPanelNotLoggedIn'
-const fb = require('@/firebaseConfig.js')
+import { rules } from '@/config/validation.js'
 export default {
   name: 'Home',
   components: {
@@ -60,10 +60,7 @@ export default {
       errorMsg: '',
       passwordResetSuccess: false,
       rules: {
-        email: [
-          { required: true, message: 'Email required', trigger: 'blur' },
-          { type: 'email', message: 'Please input a valid email address', trigger: ['blur', 'change'] }
-        ]
+        email: rules.email
       }
     }
   },
@@ -71,7 +68,7 @@ export default {
     resetPassword (form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          fb.auth.sendPasswordResetEmail(this.form.email).then(() => {
+          this.$store.dispatch("sendResetEmail", this.form.email).then(() => {
             this.passwordResetSuccess = true
             this.form.email = ''
           }).catch(err => {
