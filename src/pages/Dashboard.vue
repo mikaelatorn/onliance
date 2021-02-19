@@ -105,14 +105,17 @@ export default {
         console.log(res)
       }, err => {
         console.error(err)
+       this.$root.$emit('create-alert', { title: err.message, type: 'error'})
       })
     },
     createPost () {
       this.$store.dispatch('createPosts', this.form).then(res => {
         console.log(res)
         this.createPostDialog = false
+        this.$root.$emit('create-alert', { title: 'Post created!', type: 'success'})
       }, err => {
         console.error(err)
+        this.$root.$emit('create-alert', { title: err.message, type: 'error'})
       })
     }
   }

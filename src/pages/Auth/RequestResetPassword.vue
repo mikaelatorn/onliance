@@ -1,11 +1,5 @@
 <template>
   <div class="home">
-    <el-alert v-if="errorMsg"
-      :title="errorMsg"
-      type="error"
-      @close="removeErrorMsg"
-      show-icon>
-    </el-alert>
     <el-row class="full-height">
       <el-col :span="12" class="col-full col-left">
           <LeftPanel />
@@ -57,7 +51,6 @@ export default {
       form: {
         email: ''
       },
-      errorMsg: '',
       passwordResetSuccess: false,
       rules: {
         email: rules.email
@@ -71,15 +64,13 @@ export default {
           this.$store.dispatch("sendResetEmail", this.form.email).then(() => {
             this.passwordResetSuccess = true
             this.form.email = ''
+            this.$root.$emit('create-alert', { title: "Email sent! Check your inbox", type: 'success'})
           }).catch(err => {
             console.log(err)
-            this.errorMsg = err.message
+            this.$root.$emit('create-alert', { title: err.message, type: 'error'})
           })
         }
       })
-    },
-    removeErrorMsg () {
-      this.errorMsg = ''
     }
   }
 }

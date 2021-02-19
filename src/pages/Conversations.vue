@@ -14,7 +14,7 @@
             <transition-group name="list-complete" tag="div">
               <Post v-for="post in posts" :key="post.title" :post="post" :fullView="false" />
             </transition-group>
-            <EmptyContent v-if="!posts || posts.length === 0" contentType="Conversations" />
+            <EmptyContent v-if="posts.length === 0 && loaded" contentType="Conversations" />
           </el-col>
         </el-row>
       </div>
@@ -33,7 +33,8 @@ export default {
   },
   data () {
     return {
-      posts: []
+      posts: [],
+      loaded: false
     }
   },
   beforeMount () {
@@ -47,7 +48,7 @@ export default {
         }, 500)
       }, err => {
         console.error(err)
-        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+        this.$root.$emit('create-alert', { title: err.message, type: 'error'})
       })
     },
     sanitizePosts (posts) {
@@ -57,6 +58,7 @@ export default {
         ))
       )
       this.posts = result
+      this.loaded = true
     }
   }
 }

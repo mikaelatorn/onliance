@@ -24,7 +24,7 @@
                 <Post v-if="isInCategory(post) || !$route.query.category || $route.query.category === 'all-activity'" :post="post" :fullView="false" />
               </div>
             </transition-group>
-            <EmptyContent v-if="!posts || posts.length === 0" contentType="Activities" />
+            <EmptyContent v-if="posts.length === 0 && loaded" contentType="Activities" />
           </el-col>
         </el-row>
       </div>
@@ -57,7 +57,8 @@ export default {
         }
       ],
       category: 'all-activity',
-      posts: []
+      posts: [],
+      loaded: false
     }
   },
   beforeMount () {
@@ -72,9 +73,10 @@ export default {
       this.$store.dispatch('getPostsByParticipation').then(res => {
         console.log(res)
         this.posts = res
+        this.loaded = true
       }, err => {
         console.error(err)
-        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+        this.$root.$emit('create-alert', { title: err.message, type: 'error'})
       })
     },
     isInCategory (post) {

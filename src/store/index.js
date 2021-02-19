@@ -71,6 +71,28 @@ export const store = new Vuex.Store({
         })
       })
     },
+    changePassword({}, data) {
+      return new Promise((resolve, reject) => {
+        console.log(data)
+        fb.auth.currentUser.updatePassword(data.newPassword).then(() => {
+          resolve()
+        }).catch(err => {
+          console.log(err)
+          reject(err)
+        })
+      })
+    },
+    deleteAccount({ commit }) {
+      return new Promise((resolve, reject) => {
+        fb.auth.currentUser.delete().then(() => {
+          commit('setCurrentUser', null)
+          commit('setUserProfile', {})
+          resolve()
+        }).catch(err => {
+          reject(err)
+        });
+      })
+    },
     validateEmail ({ dispatch }, data) {
       // change this and do it properly
       if (data.email === 'mikaelatornlund@hotmail.se') dispatch('setGod', data)

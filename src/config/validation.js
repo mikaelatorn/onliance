@@ -15,6 +15,9 @@ var rules = {
   ],
   company: [
     { required: true, message: 'Company name required', trigger: 'blur' }
+  ],
+  required: [
+    { required: true, message: 'This field is required', trigger: 'blur' }
   ]
 }
 

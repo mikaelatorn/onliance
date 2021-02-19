@@ -16,7 +16,7 @@
                 <el-form-item prop="passwordRepeat" class="last-form-item">
                   <el-input class="padding-small" placeholder="Repeat new password" type="password" v-model="form.passwordRepeat"></el-input>
                 </el-form-item>
-                <el-button class="button-block button-auth" type="primary">Confirm</el-button>
+                <el-button @click="createNewPassword('form')" class="button-block button-auth" type="primary">Confirm</el-button>
               </el-form>
             </el-col>
           </div>
@@ -54,6 +54,22 @@ export default {
           { validator: validatePass, trigger: 'blur' }
         ]
       }
+    }
+  },
+  methods: {
+    createNewPassword () {
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('changePassword', this.security).then(res => {
+            this.$root.$emit('create-alert', { title: 'Password successfully updated!', type: 'success'})
+          }).catch(err => {
+            console.log(err)
+            this.$root.$emit('create-alert', { title: err.message, type: 'error'})
+          })
+        } else {
+          return false
+        }
+      })
     }
   }
 }

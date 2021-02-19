@@ -1,11 +1,5 @@
 <template>
   <div class="home">
-    <el-alert v-if="errorMsg"
-      :title="errorMsg"
-      type="error"
-      @close="removeErrorMsg"
-      show-icon>
-    </el-alert>
     <el-row class="full-height">
       <el-col :span="12" class="col-full col-left">
           <LeftPanel />
@@ -47,7 +41,6 @@
 <script>
 import { rules } from '@/config/validation.js'
 import LeftPanel from '@/components/LeftPanelNotLoggedIn'
-const fb = require('@/firebaseConfig.js')
 export default {
   name: 'Home',
   components: {
@@ -71,7 +64,6 @@ export default {
         passwordRepeat: '',
         company: ''
       },
-      errorMsg: '',
       rules: {
         fullName: rules.name,
         email: rules.email,
@@ -103,25 +95,23 @@ export default {
                 this.$router.push({ name: 'signup-success' })
               }, err => {
                 console.error(err)
+                this.$root.$emit('create-alert', { title: err.message, type: 'error'})
               })
               loading.close()
             }).catch(err => {
               console.log(err)
               loading.close()
-              this.errorMsg = err.message
+              this.$root.$emit('create-alert', { title: err.message, type: 'error'})
             })
           }).catch(err => {
             console.log(err)
             loading.close()
-            this.errorMsg = err.message
+            this.$root.$emit('create-alert', { title: err.message, type: 'error'})
           })
         } else {
           return false
         }
       })
-    },
-    removeErrorMsg () {
-      this.errorMsg = ''
     }
   }
 }

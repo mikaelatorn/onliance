@@ -1,11 +1,5 @@
 <template>
   <div class="home">
-    <el-alert v-if="errorMsg"
-      :title="errorMsg"
-      type="error"
-      @close="removeErrorMsg"
-      show-icon>
-    </el-alert>
     <el-row class="full-height">
       <el-col :span="12" class="col-full col-left">
           <LeftPanel />
@@ -49,7 +43,6 @@ export default {
         email: '',
         password: ''
       },
-      errorMsg: '',
       rules: {
         email : rules.email,
         password: rules.password
@@ -72,22 +65,20 @@ export default {
               this.$router.push({ name: 'dashboard' })
             } else {
               this.$store.dispatch('logout').then(res => {
-                this.errorMsg = 'Your email is not verified!'
+                this.$root.$emit('create-alert', { title: "Your email is not verified!", type: 'error'})
               }).catch(err => {
                 console.log(err)
+                this.$root.$emit('create-alert', { title: err.message, type: 'error'})
               })
             }
             loading.close()
           }).catch(err => {
             console.log(err)
             loading.close()
-            this.errorMsg = err.message
+            this.$root.$emit('create-alert', { title: err.message, type: 'error'})
           })
         }
       })
-    },
-    removeErrorMsg () {
-      this.errorMsg = ''
     }
   }
 }

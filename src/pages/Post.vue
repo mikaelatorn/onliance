@@ -62,7 +62,7 @@ export default {
         this.post = res
       }, err => {
         console.error(err)
-        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+        this.$root.$emit('create-alert', { title: err.message, type: 'error'})
       })
     },
     getComments () {
@@ -71,7 +71,7 @@ export default {
         this.comments = res
       }, err => {
         console.error(err)
-        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+        this.$root.$emit('create-alert', { title: err.message, type: 'error'})
       })
     },
     submitComment () {
@@ -85,7 +85,7 @@ export default {
         this.getComments()
       }, err => {
         console.error(err)
-        this.$root.$emit('create-alert', { title: 'Something went wrong!', type: 'error'})
+        this.$root.$emit('create-alert', { title: err.message, type: 'error'})
       })
     }
   }
