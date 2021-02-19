@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Loading v-if="loading" />
     <el-row class="full-height">
       <el-col :span="12" class="col-full col-left">
           <LeftPanel />
@@ -37,14 +38,15 @@
     </el-row>
   </div>
 </template>
-
 <script>
 import { rules } from '@/config/validation.js'
 import LeftPanel from '@/components/LeftPanelNotLoggedIn'
+import Loading from '@/components/Loading'
 export default {
   name: 'Home',
   components: {
-    LeftPanel
+    LeftPanel,
+    Loading
   },
   data () {
     var validatePass = (rule, value, callback) => {
@@ -79,11 +81,7 @@ export default {
     signup (form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          const loading = this.$loading({
-            lock: true,
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-          })
+          this.loading = true
           this.$store.dispatch('signup', this.form).then(user => {
             // create user obj
             console.log('USER', user)
@@ -97,15 +95,15 @@ export default {
                 console.error(err)
                 this.$root.$emit('create-alert', { title: err.message, type: 'error'})
               })
-              loading.close()
+              this.loading = false
             }).catch(err => {
               console.log(err)
-              loading.close()
+              this.loading = false
               this.$root.$emit('create-alert', { title: err.message, type: 'error'})
             })
           }).catch(err => {
             console.log(err)
-            loading.close()
+            this.loading = false
             this.$root.$emit('create-alert', { title: err.message, type: 'error'})
           })
         } else {

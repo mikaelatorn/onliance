@@ -1,6 +1,7 @@
 <template>
     <el-row>
       <TopBar name="My Conversations" />
+      <Loading v-if="loading" />
       <div class="inner-row">
         <el-row :gutter="10" class="justify-center">
           <el-col :xs="24" :sm="14" :md="16">
@@ -23,18 +24,20 @@
 <script>
 import TopBar from '@/components/TopBar'
 import Post from '@/components/PostDashboard'
+import Loading from '@/components/Loading'
 import EmptyContent from '@/components/EmptyContent'
 import { setTimeout } from 'timers';
 export default {
   components: {
     TopBar,
     Post,
-    EmptyContent
+    EmptyContent,
+    Loading
   },
   data () {
     return {
       posts: [],
-      loaded: false
+      loading: true
     }
   },
   beforeMount () {
@@ -58,7 +61,7 @@ export default {
         ))
       )
       this.posts = result
-      this.loaded = true
+      this.loading = false
     }
   }
 }

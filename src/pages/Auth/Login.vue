@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Loading v-if="loading" />
     <el-row class="full-height">
       <el-col :span="12" class="col-full col-left">
           <LeftPanel />
@@ -32,10 +33,12 @@
 <script>
 import LeftPanel from '@/components/LeftPanelNotLoggedIn'
 import { rules } from '@/config/validation.js'
+import Loading from '@/components/Loading'
 export default {
   name: 'Home',
   components: {
-    LeftPanel
+    LeftPanel,
+    Loading
   },
   data () {
     return {
@@ -46,18 +49,15 @@ export default {
       rules: {
         email : rules.email,
         password: rules.password
-      }
+      },
+      loading: false
     }
   },
   methods: {
     login (form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          const loading = this.$loading({
-            lock: true,
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-          })
+          this.loading = true
           this.$store.dispatch("signIn", this.form).then(user => {
             if (user.user.emailVerified) {
               this.$store.commit('setCurrentUser', user.user)
@@ -71,10 +71,10 @@ export default {
                 this.$root.$emit('create-alert', { title: err.message, type: 'error'})
               })
             }
-            loading.close()
+            this.loading = false
           }).catch(err => {
             console.log(err)
-            loading.close()
+            this.loading = false
             this.$root.$emit('create-alert', { title: err.message, type: 'error'})
           })
         }
